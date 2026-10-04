@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}Book Appointment{% endblock %}
+
+{% block content %}
+<div class="card" style="max-width:480px; margin: 0 auto;">
+    <h1>Book Appointment</h1>
+    <p style="margin-bottom:16px; font-size:15px;">
+        Doctor: <strong>Dr. {{ doctor.name }}</strong><br>
+        Department: <strong>{{ doctor.department }}</strong><br>
+        Specialization: <strong>{{ doctor.specialization }}</strong>
+    </p>
+
+    <form method="post">
+        {% csrf_token %}
+        {% for field in form %}
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field.errors }}
+            {{ field }}
+        {% endfor %}
+        <button type="submit" class="btn btn-primary" style="width:100%; margin-top:8px;">Confirm Booking</button>
+    </form>
+    <p style="margin-top:14px; font-size:14px;">
+        <a href="{% url 'doctor_list' %}">← Back to Doctors</a>
+    </p>
+</div>
+{% endblock %}

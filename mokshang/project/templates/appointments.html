@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block title %}My Appointments{% endblock %}
+
+{% block content %}
+<h1>My Appointments</h1>
+
+{% if appointments %}
+    <div class="card" style="padding:0;">
+        <table>
+            <thead>
+                <tr>
+                    <th>Doctor</th>
+                    <th>Department</th>
+                    <th>Date &amp; Time</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for appt in appointments %}
+                <tr>
+                    <td>Dr. {{ appt.doctor.name }}</td>
+                    <td>{{ appt.doctor.department }}</td>
+                    <td>{{ appt.date_time|date:"d M Y, H:i" }}</td>
+                    <td>
+                        <span class="badge badge-{{ appt.status|lower }}">{{ appt.status }}</span>
+                    </td>
+                    <td>
+                        {% if appt.status == 'Scheduled' %}
+                            <a href="{% url 'cancel_appointment' appt.id %}" class="btn btn-danger btn-sm">Cancel</a>
+                        {% else %}
+                            —
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% else %}
+    <div class="card">
+        <p>You have no appointments yet. <a href="{% url 'doctor_list' %}">Browse doctors</a> to book one.</p>
+    </div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}Cancel Appointment{% endblock %}
+
+{% block content %}
+<div class="card" style="max-width:480px; margin: 0 auto;">
+    <h1>Cancel Appointment</h1>
+    <p style="margin-bottom:20px; font-size:15px;">
+        <strong>Dr. {{ appointment.doctor.name }}</strong>
+        on <strong>{{ appointment.date_time|date:"d M Y, H:i" }}</strong>?
+    </p>
+    <p style="font-size:13px; margin-bottom:20px;">
+        The appointment will be marked as <em>Cancelled</em> and kept in your history.
+    </p>
+    <form method="post" style="display:inline;">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Yes, Cancel Appointment</button>
+    </form>
+    <a href="{% url 'appointment_history' %}" class="btn" style="background:#e8eaed; margin-left:8px;">Go Back</a>
+</div>
+{% endblock %}
